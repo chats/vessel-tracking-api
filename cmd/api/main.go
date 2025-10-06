@@ -41,7 +41,7 @@ func main() {
 	gpsTrackRepo := repository.NewGPSTrackRepository(db)
 
 	// Initialize use cases
-	voyageUseCase := usecase.NewVoyageUseCase(voyageRepo)
+	voyageUseCase := usecase.NewVoyageUseCase(voyageRepo, checkpointRepo, gpsTrackRepo)
 	checkpointUseCase := usecase.NewCheckpointUseCase(checkpointRepo, voyageRepo)
 	gpsTrackUseCase := usecase.NewGPSTrackUseCase(gpsTrackRepo, voyageRepo)
 

@@ -66,7 +66,7 @@ All required endpoints implemented:
 | `/health` | GET | Health check | No |
 | `/api/v1/voyages/depart` | POST | Start new voyage | Yes |
 | `/api/v1/voyages/arrive` | POST | Complete voyage | Yes |
-| `/api/v1/voyages/all` | GET | Get all voyages | Yes |
+| `/api/v1/voyages/all` | GET | Get all voyages with checkpoints & GPS tracks | Yes |
 | `/api/v1/voyage/:id` | GET | Get voyage by ID | Yes |
 | `/api/v1/checkpoints` | POST | Create checkpoint | Yes |
 | `/api/v1/checkpoints/batch` | POST | Bulk create checkpoints | Yes |

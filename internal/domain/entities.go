@@ -58,3 +58,10 @@ type WeatherInfo struct {
 	WaveHeight  float64 `json:"wave_height,omitempty" bson:"wave_height,omitempty"` // meters
 	Condition   string  `json:"condition,omitempty" bson:"condition,omitempty"`     // e.g., "clear", "cloudy", "rainy"
 }
+
+// VoyageWithDetails represents a voyage with its checkpoints and GPS tracks
+type VoyageWithDetails struct {
+	Voyage      *Voyage       `json:"voyage"`
+	Checkpoints []*Checkpoint `json:"checkpoints"`
+	GPSTracks   []*GPSTrack   `json:"gps_tracks"`
+}

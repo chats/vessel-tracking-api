@@ -34,9 +34,15 @@ Content-Type: application/json
 
 ---
 
-## Get All Voyages
+## Get All Voyages (includes checkpoints and GPS tracks for each voyage)
 GET {{BASE_URL}}/api/v1/voyages/all?limit=10&offset=0
 X-API-Key: {{API_KEY}}
+
+### Response Format:
+# Each voyage includes:
+# - voyage: Full voyage details
+# - checkpoints: Array of all checkpoints for this voyage
+# - gps_tracks: Array of all GPS tracking data for this voyage
 
 ---
 

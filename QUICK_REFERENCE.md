@@ -33,7 +33,7 @@ http://localhost:8080/api/v1
 |----------|--------|-------------|
 | `/voyages/depart` | POST | Start new voyage |
 | `/voyages/arrive` | POST | Complete voyage |
-| `/voyages/all` | GET | List all voyages |
+| `/voyages/all` | GET | List all voyages with checkpoints & GPS tracks |
 | `/voyage/:id` | GET | Get voyage by ID |
 
 ### Checkpoints
@@ -73,11 +73,16 @@ curl -X POST http://localhost:8080/api/v1/voyages/arrive \
   }'
 ```
 
-### 3. List Voyages
+### 3. List Voyages (with checkpoints and GPS tracks)
 ```bash
 curl http://localhost:8080/api/v1/voyages/all?limit=10&offset=0 \
   -H "X-API-Key: sailing-api-key-12345"
 ```
+
+**Response includes:**
+- Voyage details
+- All checkpoints for each voyage
+- All GPS tracks for each voyage
 
 ### 4. Create Checkpoint
 ```bash

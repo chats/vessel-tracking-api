@@ -66,7 +66,7 @@ sailing-backend/
 ### Voyage Management
 - `POST /api/v1/voyages/depart` - Create a new voyage (departure)
 - `POST /api/v1/voyages/arrive` - Update voyage with arrival information
-- `GET /api/v1/voyages/all` - Get all voyages (with pagination)
+- `GET /api/v1/voyages/all` - Get all voyages with checkpoints and GPS tracks (with pagination)
 - `GET /api/v1/voyage/:id` - Get voyage by ID
 
 ### Checkpoint Management
@@ -290,6 +290,52 @@ curl -X POST http://localhost:8080/api/v1/checkpoints/batch \
   "status": "completed",
   "created_at": "2025-10-01T08:00:00Z",
   "updated_at": "2025-10-02T20:00:00Z"
+}
+```
+
+### Voyage with Details (GET /api/v1/voyages/all response)
+```json
+{
+  "voyage": {
+    "id": "ObjectID",
+    "voyage_id": "unique-voyage-id",
+    "ship_id": "SHIP001",
+    "ship_name": "Sea Explorer",
+    "departure_port": "Bangkok Port",
+    "arrival_port": "Singapore Port",
+    "departure_time": "2025-10-01T08:00:00Z",
+    "arrival_time": "2025-10-02T20:00:00Z",
+    "status": "completed",
+    "created_at": "2025-10-01T08:00:00Z",
+    "updated_at": "2025-10-02T20:00:00Z"
+  },
+  "checkpoints": [
+    {
+      "id": "ObjectID",
+      "voyage_id": "unique-voyage-id",
+      "location": {"latitude": 13.7563, "longitude": 100.5018},
+      "timestamp": "2025-10-01T10:00:00Z",
+      "description": "Checkpoint at Bangkok",
+      "weather": {
+        "temperature": 30.5,
+        "wind_speed": 15.0,
+        "condition": "clear"
+      },
+      "created_at": "2025-10-01T10:00:00Z"
+    }
+  ],
+  "gps_tracks": [
+    {
+      "id": "ObjectID",
+      "voyage_id": "unique-voyage-id",
+      "location": {"latitude": 13.7563, "longitude": 100.5018},
+      "speed": 12.5,
+      "heading": 90.0,
+      "altitude": 10.0,
+      "timestamp": "2025-10-01T10:00:00Z",
+      "created_at": "2025-10-01T10:00:00Z"
+    }
+  ]
 }
 ```
 

@@ -11,13 +11,17 @@ import (
 
 // VoyageUseCase handles voyage business logic
 type VoyageUseCase struct {
-	voyageRepo domain.VoyageRepository
+	voyageRepo     domain.VoyageRepository
+	checkpointRepo domain.CheckpointRepository
+	gpsTrackRepo   domain.GPSTrackRepository
 }
 
 // NewVoyageUseCase creates a new VoyageUseCase
-func NewVoyageUseCase(voyageRepo domain.VoyageRepository) *VoyageUseCase {
+func NewVoyageUseCase(voyageRepo domain.VoyageRepository, checkpointRepo domain.CheckpointRepository, gpsTrackRepo domain.GPSTrackRepository) *VoyageUseCase {
 	return &VoyageUseCase{
-		voyageRepo: voyageRepo,
+		voyageRepo:     voyageRepo,
+		checkpointRepo: checkpointRepo,
+		gpsTrackRepo:   gpsTrackRepo,
 	}
 }
 
@@ -66,8 +70,8 @@ func (uc *VoyageUseCase) ArriveVoyage(ctx context.Context, voyageID, arrivalPort
 	return uc.voyageRepo.UpdateVoyage(ctx, voyage)
 }
 
-// GetAllVoyages retrieves all voyages
-func (uc *VoyageUseCase) GetAllVoyages(ctx context.Context, limit, offset int) ([]*domain.Voyage, error) {
+// GetAllVoyages retrieves all voyages with their checkpoints and GPS tracks
+func (uc *VoyageUseCase) GetAllVoyages(ctx context.Context, limit, offset int) ([]*domain.VoyageWithDetails, error) {
 	if limit <= 0 {
 		limit = 100
 	}
@@ -75,7 +79,34 @@ func (uc *VoyageUseCase) GetAllVoyages(ctx context.Context, limit, offset int) (
 		offset = 0
 	}
 
-	return uc.voyageRepo.GetAllVoyages(ctx, limit, offset)
+	voyages, err := uc.voyageRepo.GetAllVoyages(ctx, limit, offset)
+	if err != nil {
+		return nil, err
+	}
+
+	// Fetch checkpoints and GPS tracks for each voyage
+	result := make([]*domain.VoyageWithDetails, 0, len(voyages))
+	for _, voyage := range voyages {
+		checkpoints, err := uc.checkpointRepo.GetCheckpointsByVoyageID(ctx, voyage.VoyageID)
+		if err != nil {
+			// Log error but continue with empty checkpoints
+			checkpoints = []*domain.Checkpoint{}
+		}
+
+		gpsTracks, err := uc.gpsTrackRepo.GetGPSTracksByVoyageID(ctx, voyage.VoyageID)
+		if err != nil {
+			// Log error but continue with empty GPS tracks
+			gpsTracks = []*domain.GPSTrack{}
+		}
+
+		result = append(result, &domain.VoyageWithDetails{
+			Voyage:      voyage,
+			Checkpoints: checkpoints,
+			GPSTracks:   gpsTracks,
+		})
+	}
+
+	return result, nil
 }
 
 // GetVoyageByID retrieves a voyage by ID

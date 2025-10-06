@@ -1,0 +1,47 @@
+#version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: sailing-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: sailing_db
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - sailing-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sailing-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      ENV: production
+      MONGODB_URI: mongodb://admin:password@mongodb:27017
+      MONGODB_DATABASE: sailing_db
+      JWT_SECRET: your-super-secret-jwt-key-change-this-in-production
+      API_KEY: your-api-key-change-this-in-production
+      LOG_LEVEL: info
+    depends_on:
+      - mongodb
+    networks:
+      - sailing-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  sailing-network:
+    driver: bridge

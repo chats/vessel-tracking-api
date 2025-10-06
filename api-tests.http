@@ -1,0 +1,148 @@
+# Test API Endpoints
+
+## Base URL
+BASE_URL=http://localhost:8080
+API_KEY=sailing-api-key-12345
+
+## Health Check
+GET {{BASE_URL}}/health
+
+---
+
+## Depart Voyage
+POST {{BASE_URL}}/api/v1/voyages/depart
+X-API-Key: {{API_KEY}}
+Content-Type: application/json
+
+{
+  "ship_id": "SHIP001",
+  "ship_name": "Sea Explorer",
+  "departure_port": "Bangkok Port"
+}
+
+---
+
+## Arrive Voyage
+POST {{BASE_URL}}/api/v1/voyages/arrive
+X-API-Key: {{API_KEY}}
+Content-Type: application/json
+
+{
+  "voyage_id": "replace-with-actual-voyage-id",
+  "arrival_port": "Singapore Port"
+}
+
+---
+
+## Get All Voyages
+GET {{BASE_URL}}/api/v1/voyages/all?limit=10&offset=0
+X-API-Key: {{API_KEY}}
+
+---
+
+## Get Voyage By ID
+GET {{BASE_URL}}/api/v1/voyage/replace-with-actual-id
+X-API-Key: {{API_KEY}}
+
+---
+
+## Create Checkpoint
+POST {{BASE_URL}}/api/v1/checkpoints
+X-API-Key: {{API_KEY}}
+Content-Type: application/json
+
+{
+  "voyage_id": "replace-with-actual-voyage-id",
+  "location": {
+    "latitude": 13.7563,
+    "longitude": 100.5018
+  },
+  "timestamp": "2025-10-01T10:00:00Z",
+  "description": "Checkpoint at Bangkok",
+  "weather": {
+    "temperature": 30.5,
+    "wind_speed": 15.0,
+    "wind_dir": 180.0,
+    "wave_height": 1.5,
+    "condition": "clear"
+  }
+}
+
+---
+
+## Create Checkpoints Batch
+POST {{BASE_URL}}/api/v1/checkpoints/batch
+X-API-Key: {{API_KEY}}
+Content-Type: application/json
+
+[
+  {
+    "voyage_id": "replace-with-actual-voyage-id",
+    "location": {
+      "latitude": 13.7563,
+      "longitude": 100.5018
+    },
+    "timestamp": "2025-10-01T10:00:00Z",
+    "description": "Checkpoint 1"
+  },
+  {
+    "voyage_id": "replace-with-actual-voyage-id",
+    "location": {
+      "latitude": 13.8563,
+      "longitude": 100.6018
+    },
+    "timestamp": "2025-10-01T11:00:00Z",
+    "description": "Checkpoint 2"
+  }
+]
+
+---
+
+## Create GPS Track
+POST {{BASE_URL}}/api/v1/gps-tracks
+X-API-Key: {{API_KEY}}
+Content-Type: application/json
+
+{
+  "voyage_id": "replace-with-actual-voyage-id",
+  "location": {
+    "latitude": 13.7563,
+    "longitude": 100.5018
+  },
+  "speed": 12.5,
+  "heading": 90.0,
+  "altitude": 10.0,
+  "timestamp": "2025-10-01T10:00:00Z"
+}
+
+---
+
+## Create GPS Tracks Batch
+POST {{BASE_URL}}/api/v1/gps-tracks/batch
+X-API-Key: {{API_KEY}}
+Content-Type: application/json
+
+[
+  {
+    "voyage_id": "replace-with-actual-voyage-id",
+    "location": {
+      "latitude": 13.7563,
+      "longitude": 100.5018
+    },
+    "speed": 12.5,
+    "heading": 90.0,
+    "altitude": 10.0,
+    "timestamp": "2025-10-01T10:00:00Z"
+  },
+  {
+    "voyage_id": "replace-with-actual-voyage-id",
+    "location": {
+      "latitude": 13.8563,
+      "longitude": 100.6018
+    },
+    "speed": 13.0,
+    "heading": 95.0,
+    "altitude": 10.0,
+    "timestamp": "2025-10-01T11:00:00Z"
+  }
+]

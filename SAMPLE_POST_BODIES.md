@@ -15,13 +15,14 @@ This file contains example JSON bodies for all POST endpoints in the Sailing Bac
 }
 ```
 
-### Full Request (With optional voyage_id)
+### Full Request (With optional fields)
 ```json
 {
   "voyage_id": "custom-voyage-id-12345",
   "ship_id": "SHIP001",
   "ship_name": "Sea Explorer",
-  "departure_port": "Bangkok Port"
+  "departure_port": "Bangkok Port",
+  "arrival_port": "Singapore Port"
 }
 ```
 
@@ -30,7 +31,8 @@ This file contains example JSON bodies for all POST endpoints in the Sailing Bac
 {
   "ship_id": "SHIP-TH-001",
   "ship_name": "ไทยสมุทร",
-  "departure_port": "ท่าเรือแหลมฉบัง"
+  "departure_port": "ท่าเรือแหลมฉบัง",
+  "arrival_port": "ท่าเรือกรุงเทพ"
 }
 ```
 
@@ -39,7 +41,8 @@ This file contains example JSON bodies for all POST endpoints in the Sailing Bac
 {
   "ship_id": "CONTAINER-2024-001",
   "ship_name": "Pacific Carrier",
-  "departure_port": "Port of Singapore"
+  "departure_port": "Port of Singapore",
+  "arrival_port": "Port of Hong Kong"
 }
 ```
 

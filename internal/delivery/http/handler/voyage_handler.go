@@ -26,6 +26,7 @@ type DepartRequest struct {
 	ShipID        string `json:"ship_id"`
 	ShipName      string `json:"ship_name"`
 	DeparturePort string `json:"departure_port"`
+	ArrivalPort   string `json:"arrival_port,omitempty"`
 	VoyageID      string `json:"voyage_id,omitempty"`
 }
 
@@ -50,6 +51,7 @@ func (h *VoyageHandler) Depart(c *fiber.Ctx) error {
 		ShipID:        req.ShipID,
 		ShipName:      req.ShipName,
 		DeparturePort: req.DeparturePort,
+		ArrivalPort:   req.ArrivalPort,
 	}
 
 	if err := h.voyageUseCase.DepartVoyage(c.Context(), voyage); err != nil {

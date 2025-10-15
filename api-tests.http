@@ -17,7 +17,8 @@ Content-Type: application/json
 {
   "ship_id": "SHIP001",
   "ship_name": "Sea Explorer",
-  "departure_port": "Bangkok Port"
+  "departure_port": "Bangkok Port",
+  "arrival_port": "Singapore Port"
 }
 
 ---
